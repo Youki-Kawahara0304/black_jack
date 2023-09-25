@@ -83,7 +83,7 @@ def check_black_jack(hand):
         return True
     return False
 
-def check_bust(hand):
+def check_bust(hand):# class function, add self.count
     sum = 0
     for card in hand:
         if card == "A":
@@ -94,3 +94,45 @@ def check_bust(hand):
         print("Bust")
         return True
     return False
+
+class Dealer_Hand:
+    def __init__(self):
+        self.hand = [draw_card() for i in range(0, 2)]
+        self.soft_17 = False
+        self.bust = False
+        self.count = 0
+        self.count_2 = 0
+
+    def check_17_bust(self):
+        sum = 0
+        sum_2 = 0
+        for card in self.hand:
+            if card == "A":
+                sum += trump_value[card][0]
+                sum_2 += trump_value[card][1]
+            else:
+                sum += trump_value[card]
+                sum_2 += trump_value[card]
+        self.count = sum
+        self.count_2 = sum_2
+        if sum >= 17 and sum <= 21:
+            self.soft_17 = True
+        elif sum_2 >= 17 and sum_2 <= 21:
+            self.soft_17 = True
+        elif sum > 21:
+            self.bust = True
+            print("Dealer bust")
+
+    def compare_hands(self, player_hand): # use player class count attribute
+        player_count = 0
+        #  trump_value[player_hand[0]]  + trump_value[player_hand[1]]
+        for card in player_hand:
+            player_count += trump_value[card]
+        if self.count_2 > 21:
+            if player_count < self.count:
+                return True
+        else:
+            if player_count < self.count or player_count < self.count_2:
+                return True
+        return False
+
