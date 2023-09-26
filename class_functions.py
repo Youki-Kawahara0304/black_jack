@@ -2,7 +2,6 @@ import random
 trump = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 trump_value = {"A": [1, 11], "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, 
 "10": 10, "J": 10, "Q": 10, "K": 10}
-chip_variation = {"1": 5, "2": 10, "3": 25, "4": 50, "5": 100, "6": 500}
 
 class Hand:
     def __init__(self, spot_number, bet, inheritance = None):
@@ -30,33 +29,17 @@ class Hand:
         if double == True:
             self.bet = self.bet * 2
 
-
-# shared between player and dealer
-def draw_card():
-    return random.choice(trump)
-
-def check_black_jack(hand):
-    sum = 0
-    for card in hand:
-        if card == "A":
-            sum += trump_value[card][1]
-        else:
-            sum += trump_value[card]
-    if sum == 21:
-        return True
-    return False
-
-def check_bust(hand):# class function, add self.count
-    sum = 0
-    for card in hand:
-        if card == "A":
-            sum += trump_value[card][0]
-        else:
-            sum += trump_value[card]
-    if sum > 21:
-        print("Bust")
-        return True
-    return False
+    def check_bust(self):#
+        sum = 0
+        for card in self.hand:
+            if card == "A":
+                sum += trump_value[card][0]
+            else:
+                sum += trump_value[card]
+        if sum > 21:
+            print("Bust")
+            return True
+        return False
 
 class Dealer_Hand:
     def __init__(self):
@@ -98,4 +81,20 @@ class Dealer_Hand:
             if player_count < self.count or player_count < self.count_2:
                 return True
         return False
+
+# shared between player and dealer
+
+def draw_card():
+    return random.choice(trump)
+
+def check_black_jack(hand):
+    sum = 0
+    for card in hand:
+        if card == "A":
+            sum += trump_value[card][1]
+        else:
+            sum += trump_value[card]
+    if sum == 21:
+        return True
+    return False
 

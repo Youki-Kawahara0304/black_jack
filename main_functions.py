@@ -4,7 +4,7 @@ player_chip = 1000
 
 dealer_hand = class_functions.Dealer_Hand()
 
-# Readability for users, 
+# Readability for users, insurance as a chip, player_hands.count
 
 def choose_spot():
     finish_choosing = False
@@ -105,7 +105,6 @@ def main_feature(player_hand, eligibility_for_double = True):
     elif int(decision) == 3:
         return
 
-# insurance, player_hands_count
 def payout(dealer_hand, player_hands, player_chip):
     print(dealer_hand.hand)
     dealer_hand.check_17_bust()
@@ -126,6 +125,7 @@ def payout(dealer_hand, player_hands, player_chip):
 
         elif player_hand.black_jack == True:
             print("You win ${}".format(str(player_hand.bet * 2.5)))
+            player_chip += player_hand.bet * 2.5
         elif player_hand.split == True:
             payout(dealer_hand, player_hand.splited_hands) 
         elif player_hand.bust == True:
@@ -133,12 +133,14 @@ def payout(dealer_hand, player_hands, player_chip):
                 player_chip -= player_hand.bet # + insurance     
         elif dealer_hand.bust == True:
             print("You win ${}".format(str(player_hand.bet * 2)))
+            player_chip += player_hand.bet * 2
 
         else:
             if dealer_hand.compare_hands(player_hand.hand) == True:
                 player_chip -= player_hand.bet # + insurance
             elif dealer_hand.soft_17 == True and dealer_hand.compare_hands(player_hand.hand) != True :
                 print("You win ${}".format(str(player_hand.bet * 2)))
+                player_chip += player_hand.bet * 2
             else:
                 dealer_draw = True
                 while dealer_draw == True:
@@ -148,20 +150,14 @@ def payout(dealer_hand, player_hands, player_chip):
                     print(dealer_hand.hand)
                     if dealer_hand.bust == True:
                         print("You win ${}".format(str(player_hand.bet * 2)))
+                        player_chip += player_hand.bet * 2
                         dealer_draw = False
                     elif dealer_hand.compare_hands(player_hand.hand) == True:
                         player_chip -= player_hand.bet # + insurance
                         dealer_draw = False
                     elif dealer_hand.soft_17 == True and dealer_hand.compare_hands(player_hand.hand) != True :
                         print("You win ${}".format(str(player_hand.bet * 2)))
+                        player_chip += player_hand.bet * 2
                         dealer_draw = False
     return player_chip            
                     
-# main 
-
-# set_multiple_hands()
-# print(dealer_hand.hand[0], " (Dealer) ")
-# start_a_game(player_hands)
-# print("Dealer hand ", dealer_hand.hand[0], dealer_hand.hand[1])
-# print(payout(dealer_hand, player_hands, player_chip))
-
