@@ -1,3 +1,3 @@
 # black_jack
 
-#h1 Python termnal game Black Jack
+##h2 Python termnal game Black Jack
